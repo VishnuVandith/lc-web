@@ -78,6 +78,16 @@ export default function Header() {
         return () => observerRef.current?.disconnect();
     }, []);
 
+    // Sync sidebar state to a body class so CSS can conditionally offset #main
+    useEffect(() => {
+        if (sidebarRevealed) {
+            document.body.classList.add('sidebar-open');
+        } else {
+            document.body.classList.remove('sidebar-open');
+        }
+        return () => document.body.classList.remove('sidebar-open');
+    }, [sidebarRevealed]);
+
     const toggleSub = (idx) => {
         setOpenSubs((prev) => ({ ...prev, [idx]: !prev[idx] }));
     };
